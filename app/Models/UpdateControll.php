@@ -5,18 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Models extends Model
+class UpdateControll extends Model
 {
     use HasFactory;
-
-    protected $table = 'models';
+    protected $table = 'update_controll';
 
     protected $fillable = [
-        'status_id',
-        'create_user_id',
-        'update_user_id',
-        'update_controll_id' .
         'name',
-        'active',
+        'create_user_id',
     ];
 }

@@ -16,6 +16,9 @@
             <li>
                 <a href="/models">Модели</a>
             </li>
+            <li>
+                <a href="/download">Загрузка файлов csv</a>
+            </li>
         </ul>
     </div>
 @endsection

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,7 +12,12 @@ return new class extends Migration
     {
         Schema::create('model_brends', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+
+            $table->unsignedBigInteger('model_id');
+            $table->foreign('model_id')->references('id')->on('models')->onDelete('cascade');
+
+            $table->unsignedBigInteger('brend_id');
+            $table->foreign('brend_id')->references('id')->on('brends')->onDelete('cascade');
         });
     }
 

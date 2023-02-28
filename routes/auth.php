@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\BrendController;
+use App\Http\Controllers\DownloadControll;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ModelController;
 use App\Http\Controllers\ShopController;
@@ -48,13 +49,19 @@ Route::middleware('auth')->group(function () {
         ->name('welcome');
 
     Route::get('/brends', [BrendController::class, 'home'])
-        ->name('welcome');
+        ->name('brends');
 
     Route::get('/shop', [ShopController::class, 'home'])
-        ->name('welcome');
+        ->name('shop');
 
     Route::get('/model', [ModelController::class, 'home'])
-        ->name('welcome');
+        ->name('model');
+
+    Route::get('/download', [DownloadControll::class, 'home'])
+        ->name('download');
+
+    Route::post('/download', [DownloadControll::class, 'downloadCSV'])
+        ->name('downloadCSV');
 
     // Route::get('verify-email', EmailVerificationPromptController::class)
     //             ->name('verification.notice');

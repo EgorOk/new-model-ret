@@ -10,11 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('models', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-
-            $table->unsignedBigInteger('status_id');
-            $table->foreign('status_id')->references('id')->on('status')->onDelete('cascade');
+            $table->text('text');
 
             $table->unsignedBigInteger('create_user_id');
             $table->foreign('create_user_id')->references('id')->on('users')->onDelete('cascade');
@@ -22,11 +20,11 @@ return new class extends Migration {
             $table->unsignedBigInteger('update_user_id');
             $table->foreign('update_user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->unsignedBigInteger('update_controll_id');
-            $table->foreign('update_controll_id')->references('id')->on('update_controll')->onDelete('cascade')->nullable();
+            $table->unsignedBigInteger('model_id');
+            $table->foreign('model_id')->references('id')->on('models')->onDelete('cascade');
 
-            $table->text('name');
-            $table->boolean('active');
+            $table->unsignedBigInteger('shop_id');
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -36,6 +34,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('models');
+        Schema::dropIfExists('comments');
     }
 };
