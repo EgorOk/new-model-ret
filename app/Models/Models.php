@@ -15,7 +15,7 @@ class Models extends Model
         'status_id',
         'create_user_id',
         'update_user_id',
-        'update_controll_id' .
+        'update_controll_id',
         'name',
         'active',
     ];
