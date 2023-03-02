@@ -7,12 +7,13 @@ use App\Models\UpdateControll;
 use Illuminate\Http\Request;
 use Illuminate\Support\LazyCollection;
 
-class DownloadControll extends Controller
+class DownloadController extends Controller
 {
     public function home()
     {
         return view("download");
     }
+
     public function downloadCSV(Request $request)
     {
         // dd($request->file('formFile')->getMimeType(), $request->file('formFile')->getClientOriginalExtension());
@@ -48,23 +49,26 @@ class DownloadControll extends Controller
         $rezultPars = $firstTenNumbers = $pars->skip(1)->collect();
 
         $modelKey = array_search("model", $mark[0]);
-        $error = array();
+        $errorsModels = [];
+        $createModels = [];
 
         foreach ($rezultPars as $key => $modelPars) {
-            // echo $key . " " . $modelPars[$modelKey] . "<br>";
-
-            if (Models::where('name', $modelPars[$modelKey])->first()) {
-                array_push($error, $modelPars[$modelKey]);
-            } else
+            // echo $key . " " . $model . "<br>";
+            $model = $modelPars[$modelKey];
+            $modelDuo = Models::where('name', $model)->first();
+            if ($modelDuo) {
+                array_push($errorsModels, ['model' => $model, 'id' => $modelDuo->id]);
+            } else {
                 $models = Models::create([
                     'create_user_id' => $userId,
                     'update_user_id' => $userId,
                     'update_controll_id' => $import->id,
-                    'name' => $modelPars[$modelKey],
+                    'name' => $model,
                     'active' => true,
                 ]);
+                array_push($createModels, ['model' => $model]);
+            }
         }
-        dd($error);
-        return view("download");
+        return view("download", ['code' => 201, 'errorsModels' => $errorsModels, 'createModels' => $createModels]);
     }
 }
