@@ -14,6 +14,18 @@
                 <input class="form-control" type="file" id="formFile" name="formFile">
                 <div id="formFile" class="form-text">Предусмотрена загрузка лишь файлов csv</div>
             </div>
+            @isset($brands)
+                @foreach ($brands as $key => $brand)
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="brandId" id="flexRadioDefault{{ $key }}"
+                            value="{{ $brand->id }}">
+                        <label class="form-check-label" for="flexRadioDefault{{ $key }}">
+                            {{ $brand['name'] }}
+                        </label>
+                    </div>
+                @endforeach
+            @endisset
+            <br>
             @if ($errors->any())
                 @foreach ($errors->all() as $error)
                     <p class="text-danger">{{ $error }}</p>
@@ -23,47 +35,44 @@
         </form>
     </div>
     <hr>
-    @isset($code)
-        @if ($code)
+    @isset($models)
+        @if ($models != null)
             <div class="container">
                 <div>
                     <div class="accordion" id="accordionExample">
-                        @if ($errorsModels != null)
+                        @if ($models['errorsModels'] != null)
                             <div class="accordion-item">
                                 <h5 class="accordion-header" id="headingOne">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        <h5 class="text-danger">Дубликаты: {{ count($errorsModels) }}</h5>
+                                        <h5 class="text-danger">Дубликаты: {{ count($models['errorsModels']) }}</h5>
                                     </button>
                                 </h5>
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
                                     <div class="accordion-body">
-                                        @foreach ($errorsModels as $errorsModel)
-                                            {{-- <button type="button" class="btn" data-bs-toggle="modal"
-                                                data-bs-target="#exampleModal">
-                                                {{ $errorsModel['model'] }} - {{ $errorsModel['id'] }}
-                                            </button> --}}
-
+                                        @foreach ($models['errorsModels'] as $key => $errorsModel)
                                             <button type="button" class="btn" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal" data-bs-whatever='{{ $errorsModel['model'] }}'
-                                                data-bs-whatever-id='{{ $errorsModel['id'] }}'>{{ $errorsModel['model'] }}
+                                                data-bs-whatever-id='{{ $errorsModel['id'] }}'>{{ $key + 1 }}.
+                                                {{ $errorsModel['model'] }}
                                             </button>
+                                            <br>
                                         @endforeach
                                     </div>
                                 </div>
                             </div>
                         @endif
-                        @if ($createModels != null)
+                        @if ($models['createModels'] != null)
                             <div class="accordion-item">
                                 <h5 class="accordion-header" id="headingTwo">
                                     <button class="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                        <h5 class="text-success">Заведены: {{ count($createModels) }}</h5>
+                                        <h5 class="text-success">Заведены: {{ count($models['createModels']) }}</h5>
                                     </button>
                                 </h5>
                                 <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
                                     <div class="accordion-body">
-                                        @foreach ($createModels as $createModel)
+                                        @foreach ($models['createModels'] as $createModel)
                                             <p>{{ $createModel['model'] }}</p>
                                         @endforeach
                                     </div>
@@ -85,7 +94,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -105,8 +113,8 @@
             const modalTitle = exampleModal.querySelector('.modal-title')
             const modalBody = exampleModal.querySelector('.modal-body')
 
-            modalTitle.textContent = `Модель ${model['model']}`
-            modalBody.textContent = `ID ${id['id']}`
+            modalTitle.textContent = `Модель ${model}`
+            modalBody.textContent = `ID ${id}`
         })
     </script>
 @endsection

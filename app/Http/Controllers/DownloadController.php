@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brands;
+use App\Models\ModelBrands;
 use App\Models\Models;
 use App\Models\UpdateControll;
 use Illuminate\Http\Request;
@@ -9,9 +11,11 @@ use Illuminate\Support\LazyCollection;
 
 class DownloadController extends Controller
 {
-    public function home()
+    public function modelList()
     {
-        return view("download");
+        $brands = Brands::get();
+
+        return view("downloadModel", ['brands' => $brands]);
     }
 
     public function downloadCSV(Request $request)
@@ -19,6 +23,7 @@ class DownloadController extends Controller
         // dd($request->file('formFile')->getMimeType(), $request->file('formFile')->getClientOriginalExtension());
         $validated = $request->validate([
             'formFile' => 'required|mimes:csv,txt',
+            'brandId' => 'required',
         ]);
 
         $originalFile = $request->file('formFile');
@@ -49,11 +54,11 @@ class DownloadController extends Controller
         $rezultPars = $firstTenNumbers = $pars->skip(1)->collect();
 
         $modelKey = array_search("model", $mark[0]);
+        $brands = Brands::get();
         $errorsModels = [];
         $createModels = [];
 
         foreach ($rezultPars as $key => $modelPars) {
-            // echo $key . " " . $model . "<br>";
             $model = $modelPars[$modelKey];
             $modelDuo = Models::where('name', $model)->first();
             if ($modelDuo) {
@@ -66,9 +71,16 @@ class DownloadController extends Controller
                     'name' => $model,
                     'active' => true,
                 ]);
+
+                ModelBrands::create([
+                    'model_id' => $models->id,
+                    'brand_id' => $request->brandId,
+                ]);
+
                 array_push($createModels, ['model' => $model]);
             }
         }
-        return view("download", ['code' => 201, 'errorsModels' => $errorsModels, 'createModels' => $createModels]);
+
+        return view("downloadModel", ['models' => ['brands' => $brands, 'errorsModels' => $errorsModels, 'createModels' => $createModels]]);
     }
 }

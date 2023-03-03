@@ -10,14 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('model_brends', function (Blueprint $table) {
+        Schema::create('model_brands', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('model_id');
             $table->foreign('model_id')->references('id')->on('models')->onDelete('cascade');
 
-            $table->unsignedBigInteger('brend_id');
-            $table->foreign('brend_id')->references('id')->on('brends')->onDelete('cascade');
+            $table->unsignedBigInteger('brand_id');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
         });
     }
 

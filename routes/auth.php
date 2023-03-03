@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\BrendController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\HomeController;
@@ -48,20 +49,32 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'home'])
         ->name('welcome');
 
-    Route::get('/brends', [BrendController::class, 'home'])
-        ->name('brends');
-
     Route::get('/shop', [ShopController::class, 'home'])
         ->name('shop');
 
-    Route::get('/model', [ModelController::class, 'home'])
+
+    Route::get('/models', [ModelController::class, 'home'])
         ->name('model');
 
-    Route::get('/download', [DownloadController::class, 'home'])
+    Route::get('/download', [DownloadController::class, 'modelList'])
         ->name('download');
 
     Route::post('/download', [DownloadController::class, 'downloadCSV'])
         ->name('downloadCSV');
+
+
+    Route::get('/create-shop', [ShopController::class, 'createShop'])
+        ->name('createShop');
+
+
+    Route::get('/brands', [BrandController::class, 'brands'])
+        ->name('brands');
+
+    Route::get('/create-brand', [BrandController::class, 'createBrand'])
+        ->name('createBrаnd');
+
+    Route::post('/create-brand', [BrandController::class, 'create'])
+        ->name('create');
 
     // Route::get('verify-email', EmailVerificationPromptController::class)
     //             ->name('verification.notice');
