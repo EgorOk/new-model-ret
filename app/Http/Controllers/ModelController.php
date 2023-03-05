@@ -9,7 +9,7 @@ class ModelController extends Controller
 {
     public function home()
     {
-        $models = Models::get();
+        $models = Models::all();
 
         return view('models', ['models' => $models]);
     }

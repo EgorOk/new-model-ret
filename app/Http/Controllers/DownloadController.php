@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Support\Facades\Validator;
 use App\Models\Brands;
 use App\Models\ModelBrands;
 use App\Models\Models;
@@ -21,10 +23,21 @@ class DownloadController extends Controller
     public function downloadCSV(Request $request)
     {
         // dd($request->file('formFile')->getMimeType(), $request->file('formFile')->getClientOriginalExtension());
-        $validated = $request->validate([
+        // $validated = $request->validate([
+        //     'formFile' => 'required|mimes:csv,txt',
+        //     'brandId' => 'required',
+        // ]);
+
+        $validator = Validator::make($request->all(), [
             'formFile' => 'required|mimes:csv,txt',
             'brandId' => 'required',
-        ]);
+          ]);
+
+          if ($validator->fails()) {
+            return redirect('/download')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
 
         $originalFile = $request->file('formFile');
         $userId = auth()->id();
@@ -54,7 +67,6 @@ class DownloadController extends Controller
         $rezultPars = $firstTenNumbers = $pars->skip(1)->collect();
 
         $modelKey = array_search("model", $mark[0]);
-        $brands = Brands::get();
         $errorsModels = [];
         $createModels = [];
 
@@ -81,7 +93,8 @@ class DownloadController extends Controller
                 array_push($createModels, ['model' => $model]);
             }
         }
-
-        return view("downloadModel", ['models' => ['brands' => $brands, 'errorsModels' => $errorsModels, 'createModels' => $createModels]]);
+        
+        $brands = Brands::get();
+        return view("downloadModel", ['models' => ['errorsModels' => $errorsModels, 'createModels' => $createModels], 'brands' => $brands]);
     }
 }
