@@ -58,6 +58,7 @@ class DownloadController extends Controller
         $errorsModels = [];
         $createModels = [];
 
+        //проверки дублей и создание массива ошибок
         foreach ($rezultPars as $key => $modelPars) {
             $model = $modelPars[$modelKey];
             $modelDuo = Models::where('name', $model)->first();
