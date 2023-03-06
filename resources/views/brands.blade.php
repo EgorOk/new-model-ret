@@ -5,24 +5,30 @@
 @endsection
 
 @section('main_content')
-    <div class="container">
-        <table class="table table-striped">
-            <thead>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">id</th>
+                <th scope="col">Бренд</th>
+                <th scope="col">Кто создал</th>
+                <th scope="col">Когда создано</th>
+                <th scope="col">Кто изменил</th>
+                <th scope="col">Когда изменено</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($brands as $key => $brand)
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">id</th>
-                    <th scope="col">Бренд</th>
+                    <td>{{ $key + 1 }}</td>
+                    <td>{{ $brand['id'] }}</th>
+                    <td><a href="/brands/{{ $brand['id'] }}" class="link-dark">{{ $brand['name'] }}</a></th>
+                    <td>{{ $brand->create_user->name }}</th>
+                    <td>{{ $brand->created_at }}</th>
+                    <td>{{ $brand->update_user->name }}</th>
+                    <td>{{ $brand->updated_at }}</th>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($brands as $key => $brand)
-                    <tr>
-                        <td>{{ $key + 1 }}</td>
-                        <td>{{ $brand['id'] }}</th>
-                        <td>{{ $brand['name'] }}</th>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+            @endforeach
+        </tbody>
+    </table>
 @endsection

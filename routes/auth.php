@@ -49,31 +49,36 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'home'])
         ->name('welcome');
 
-    Route::get('/shop', [ShopController::class, 'home'])
-        ->name('shop');
-
-
-    Route::get('/models', [ModelController::class, 'home'])
+    Route::get('models', [ModelController::class, 'home'])
         ->name('model');
 
-    Route::get('/download', [DownloadController::class, 'modelList'])
+    Route::get('download', [DownloadController::class, 'modelList'])
         ->name('download');
 
-    Route::post('/download', [DownloadController::class, 'downloadCSV'])
+    Route::post('download', [DownloadController::class, 'downloadCSV'])
         ->name('downloadCSV');
 
 
-    Route::get('/create-shop', [ShopController::class, 'createShop'])
+    Route::get('shops', [ShopController::class, 'shops'])
+        ->name('shops');
+
+    Route::get('create-shop', [ShopController::class, 'createShop'])
         ->name('createShop');
 
+    Route::post('create-shop', [ShopController::class, 'create'])
+        ->name('create');
 
-    Route::get('/brands', [BrandController::class, 'brands'])
+
+    Route::get('brands', [BrandController::class, 'brands'])
         ->name('brands');
+
+    Route::get('brands/{id}', [BrandController::class, 'brand'])
+        ->name('brand');
 
     Route::get('/create-brand', [BrandController::class, 'createBrand'])
         ->name('createBrаnd');
 
-    Route::post('/create-brand', [BrandController::class, 'create'])
+    Route::post('create-brand', [BrandController::class, 'create'])
         ->name('create');
 
     // Route::get('verify-email', EmailVerificationPromptController::class)

@@ -1,10 +1,13 @@
 @extends('layout')
 
 @section('title')
-    New-model-ret список моделей
+    New-model-ret список моделей бренда {{ $brand->name }}
 @endsection
 
 @section('main_content')
+    <div class="row">
+        <h4>{{ $brand->name }}</h4>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -20,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($models as $key => $model)
+                @foreach ($brand->models as $key => $model)
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>{{ $model->id }}</th>

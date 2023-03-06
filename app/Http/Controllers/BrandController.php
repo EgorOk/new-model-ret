@@ -10,7 +10,14 @@ class BrandController extends Controller
     public function brands()
     {
         $brands = Brands::get();
+
         return view('brands', ['brands' => $brands]);
+    }
+    public function brand($id)
+    {
+        $brand = Brands::where('id', $id)->first();
+
+        return view('brand', ['brand' => $brand]);
     }
 
     public function createBrand()

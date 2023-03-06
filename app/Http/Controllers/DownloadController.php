@@ -22,12 +22,6 @@ class DownloadController extends Controller
 
     public function downloadCSV(Request $request)
     {
-        // dd($request->file('formFile')->getMimeType(), $request->file('formFile')->getClientOriginalExtension());
-        // $validated = $request->validate([
-        //     'formFile' => 'required|mimes:csv,txt',
-        //     'brandId' => 'required',
-        // ]);
-
         $validator = Validator::make($request->all(), [
             'formFile' => 'required|mimes:csv,txt',
             'brandId' => 'required',
@@ -93,7 +87,7 @@ class DownloadController extends Controller
                 array_push($createModels, ['model' => $model]);
             }
         }
-        
+
         $brands = Brands::get();
         return view("downloadModel", ['models' => ['errorsModels' => $errorsModels, 'createModels' => $createModels], 'brands' => $brands]);
     }

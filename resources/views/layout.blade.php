@@ -98,7 +98,6 @@
             </div>
         </nav>
     </div>
-    <hr>
     @yield('main_content')
 </body>
 
