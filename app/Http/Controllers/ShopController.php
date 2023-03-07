@@ -22,6 +22,12 @@ class ShopController extends Controller
 
         return view('createShop', ['brands' => $brands]);
     }
+    public function shop($id)
+    {
+        $shop = Shops::query()->select(['id', 'name', 'url'])->with(['brands'])->where('id', $id)->first();
+
+        return view('shop', ['shop' => $shop]);
+    }
 
     public function create(Request $request)
     {

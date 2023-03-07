@@ -9,7 +9,6 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">id</th>
                 <th scope="col">Магазин</th>
                 <th scope="col">Бренды</th>
                 <th scope="col">Кто создал</th>
@@ -22,8 +21,7 @@
             @foreach ($shops as $key => $shop)
                 <tr>
                     <td>{{ $key + 1 }}</td>
-                    <td>{{ $shop['id'] }}</th>
-                    <td><a href="/shops/{{ $shop['id'] }}" class="link-dark">{{ $shop['name'] }}</a></th>
+                    <td><a href="/shops/{{ $shop->id }}" class="link-dark">{{ $shop->name }}</a></th>
                     <td>
                         <ul>
                             @isset($shop->brands)

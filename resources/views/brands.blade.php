@@ -9,7 +9,6 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">id</th>
                 <th scope="col">Бренд</th>
                 <th scope="col">Кто создал</th>
                 <th scope="col">Когда создано</th>
@@ -21,8 +20,7 @@
             @foreach ($brands as $key => $brand)
                 <tr>
                     <td>{{ $key + 1 }}</td>
-                    <td>{{ $brand['id'] }}</th>
-                    <td><a href="/brands/{{ $brand['id'] }}" class="link-dark">{{ $brand['name'] }}</a></th>
+                    <td><a href="/brands/{{ $brand->id }}" class="link-dark">{{ $brand->name }}</a></th>
                     <td>{{ $brand->create_user->name }}</th>
                     <td>{{ $brand->created_at }}</th>
                     <td>{{ $brand->update_user->name }}</th>

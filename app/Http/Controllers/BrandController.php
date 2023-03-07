@@ -15,7 +15,7 @@ class BrandController extends Controller
     }
     public function brand($id)
     {
-        $brand = Brands::where('id', $id)->first();
+        $brand = Brands::query()->select(['id', 'name'])->with(['models'])->where('id', $id)->first();
 
         return view('brand', ['brand' => $brand]);
     }

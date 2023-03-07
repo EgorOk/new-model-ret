@@ -13,7 +13,6 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">id</th>
                     <th scope="col">Модель</th>
                     <th scope="col">Бренд</th>
                     <th scope="col">Кто создал</th>
@@ -26,7 +25,6 @@
                 @foreach ($brand->models as $key => $model)
                     <tr>
                         <td>{{ $key + 1 }}</td>
-                        <td>{{ $model->id }}</th>
                         <td>{{ $model->name }}</th>
                         <td>{{ $model->brand[0]->name }}</th>
                         <td>{{ $model->create_user->name }}</th>
